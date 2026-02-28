@@ -80,7 +80,7 @@ import (
 	"os"
 	"time"
 
-	"[github.com/yourorg/zerovllm/client](https://github.com/yourorg/zerovllm/client)"
+	"github.com/agenthands/zerovllm/client"
 )
 
 func main() {
