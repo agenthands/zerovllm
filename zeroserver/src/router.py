@@ -1,7 +1,7 @@
 import zmq
 import zmq.asyncio
 import asyncio
-import json
+import orjson
 import logging
 from opentelemetry import trace
 from .telemetry import extract_trace_context
@@ -52,7 +52,7 @@ class ZeroRouter:
 
         req_id = "unknown"
         try:
-            metadata = json.loads(meta_json.decode("utf-8"))
+            metadata = orjson.loads(meta_json)
             req_id = metadata.get("request_id", "unknown")
             prompt = metadata.get("prompt", "")
             trace_ctx = metadata.get("trace_context", {})
@@ -67,11 +67,11 @@ class ZeroRouter:
                 
                 reply = [
                     identity,
-                    json.dumps(response).encode("utf-8")
+                    orjson.dumps(response)
                 ]
                 await self.socket.send_multipart(reply)
                 
-        except json.JSONDecodeError:
+        except orjson.JSONDecodeError:
             logger.error("Failed to decode metadata JSON")
             await self.send_error(identity, "unknown", "invalid metadata JSON")
         except Exception as e:
@@ -82,7 +82,7 @@ class ZeroRouter:
         try:
             reply = [
                 identity,
-                json.dumps({"request_id": req_id, "error": err_msg}).encode("utf-8")
+                orjson.dumps({"request_id": req_id, "error": err_msg})
             ]
             await self.socket.send_multipart(reply)
         except Exception as e:

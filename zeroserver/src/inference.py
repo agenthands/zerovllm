@@ -81,12 +81,12 @@ class VisionEngine:
                 images=images if images else None
             )
 
-            text_out = ""
+            text_out = []
             async for response in generator:
-                if hasattr(response, "new_text"):
-                    text_out += response.new_text
+                if hasattr(response, "new_text") and response.new_text:
+                    text_out.append(response.new_text)
 
-            return {"request_id": request_id, "text": text_out}
+            return {"request_id": request_id, "text": "".join(text_out)}
 
         except Exception as e:
             logger.error(f"Inference failed for {request_id}: {e}")

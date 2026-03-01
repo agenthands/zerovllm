@@ -52,6 +52,10 @@ func TestE2EMultimodal(t *testing.T) {
 	// Inherit stdout so we can see the VLLM loading progress
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
+	cmd.Cancel = func() error {
+		return cmd.Process.Signal(os.Interrupt)
+	}
+	cmd.WaitDelay = 2 * time.Second
 
 	err = cmd.Start()
 	require.NoError(t, err)

@@ -73,7 +73,7 @@ func (m *multiplexer) reactorLoop(ctx context.Context) {
 
 		// Drain the send channel
 	drainSend:
-		for i := 0; i < 100; i++ {
+		for i := 0; i < 1000; i++ {
 			select {
 			case parts := <-m.sendChan:
 				args := make([]interface{}, len(parts))
@@ -87,7 +87,7 @@ func (m *multiplexer) reactorLoop(ctx context.Context) {
 		}
 
 		// Poll incoming
-		sockets, err := poller.Poll(5 * time.Millisecond)
+		sockets, err := poller.Poll(50 * time.Millisecond)
 		if err != nil {
 			continue
 		}
@@ -180,6 +180,7 @@ func (m *multiplexer) GenerateVision(ctx context.Context, prompt string, images 
 func (m *multiplexer) Close() error {
 	m.cancel()
 	m.wg.Wait()
+	m.dealer.SetLinger(0)
 	m.dealer.Close()
 	return nil
 }
