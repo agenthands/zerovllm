@@ -1,0 +1,21 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.12, pytest-9.0.2, pluggy-1.6.0 -- /Users/Janis_Vizulis/go/src/github.com/agenthands/zerovllm/zeroserver/.venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/Janis_Vizulis/go/src/github.com/agenthands/zerovllm/zeroserver
+configfile: pyproject.toml
+plugins: asyncio-1.3.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 2 items
+
+tests/test_router.py::test_router_success FAILED
+tests/test_router.py::test_router_exception FAILEDTask exception was never retrieved
+future: <Task finished name='Task-2' coro=<ZeroRouter.start() done, defined at /Users/Janis_Vizulis/go/src/github.com/agenthands/zerovllm/zeroserver/src/router.py:23> exception=ZMQError('ipc path "/private/var/folders/ym/9wr1689j2jjfm37pjkyygkwr0000gn/T/pytest-of-Janis_Vizulis/pytest-1/test_router_success0/test_router.sock" is longer than 103 characters (sizeof(sockaddr_un.sun_path)). zmq.IPC_PATH_MAX_LEN constant can be used to check addr length (if it is defined). (addr='ipc:///private/var/folders/ym/9wr1689j2jjfm37pjkyygkwr0000gn/T/pytest-of-Janis_Vizulis/pytest-1/test_router_success0/test_router.sock')')>
+Traceback (most recent call last):
+  File "/Users/Janis_Vizulis/go/src/github.com/agenthands/zerovllm/zeroserver/src/router.py", line 24, in start
+    self.socket.bind(self.socket_path)
+  File "/Users/Janis_Vizulis/go/src/github.com/agenthands/zerovllm/zeroserver/.venv/lib/python3.12/site-packages/zmq/sugar/socket.py", line 320, in bind
+    super().bind(addr)
+  File "zmq/backend/cython/_zmq.py", line 1002, in zmq.backend.cython._zmq.Socket.bind
+    raise ZMQError(msg=msg)
+    ^^^^^^^^^^^
+zmq.error.ZMQError: ipc path "/private/var/folders/ym/9wr1689j2jjfm37pjkyygkwr0000gn/T/pytest-of-Janis_Vizulis/pytest-1/test_router_success0/test_router.sock" is longer than 103 characters (sizeof(sockaddr_un.sun_path)). zmq.IPC_PATH_MAX_LEN constant can be used to check addr length (if it is defined). (addr='ipc:///private/var/folders/ym/9wr1689j2jjfm37pjkyygkwr0000gn/T/pytest-of-Janis_Vizulis/pytest-1/test_router_success0/test_router.sock')

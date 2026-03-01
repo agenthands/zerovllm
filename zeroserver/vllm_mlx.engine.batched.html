@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python: module vllm_mlx.engine.batched</title>
+</head><body>
+
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title"><a href="vllm_mlx.html" class="white">vllm_mlx</a>.<a href="vllm_mlx.engine.html" class="white">engine</a>.batched</strong></td>
+<td class="extra"><a href=".">index</a><br><a href="file:/Users/Janis_Vizulis/go/src/github.com/agenthands/zerovllm/zeroserver/.venv/lib/python3.12/site-packages/vllm_mlx/engine/batched.py">/Users/Janis_Vizulis/go/src/github.com/agenthands/zerovllm/zeroserver/.venv/lib/python3.12/site-packages/vllm_mlx/engine/batched.py</a></td></tr></table>
+    <p><span class="code">Batched&nbsp;engine&nbsp;for&nbsp;continuous&nbsp;batching&nbsp;with&nbsp;multiple&nbsp;concurrent&nbsp;users.<br>
+&nbsp;<br>
+This&nbsp;engine&nbsp;wraps&nbsp;AsyncEngineCore&nbsp;to&nbsp;provide&nbsp;continuous&nbsp;batching<br>
+for&nbsp;better&nbsp;throughput&nbsp;when&nbsp;serving&nbsp;multiple&nbsp;concurrent&nbsp;requests.<br>
+&nbsp;<br>
+For&nbsp;MLLM&nbsp;models,&nbsp;all&nbsp;requests&nbsp;(text-only&nbsp;and&nbsp;multimodal)&nbsp;are&nbsp;routed&nbsp;through<br>
+the&nbsp;MLLMScheduler,&nbsp;which&nbsp;handles&nbsp;vision&nbsp;encoding&nbsp;and&nbsp;batched&nbsp;generation&nbsp;via<br>
+MLLMBatchGenerator.&nbsp;MLLM&nbsp;models&nbsp;only&nbsp;initialise&nbsp;the&nbsp;MLLM&nbsp;scheduler&nbsp;(not&nbsp;the<br>
+LLM&nbsp;engine),&nbsp;so&nbsp;text-only&nbsp;requests&nbsp;must&nbsp;also&nbsp;be&nbsp;routed&nbsp;through&nbsp;it.</span></p>
+<p>
+<table class="section">
+<tr class="decor pkg-content-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Modules</strong></td></tr>
+    
+<tr><td class="decor pkg-content-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="logging.html">logging</a><br>
+</td><td class="multicolumn"></td><td class="multicolumn"></td><td class="multicolumn"></td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor index-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Classes</strong></td></tr>
+    
+<tr><td class="decor index-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl>
+<dt class="heading-text"><a href="builtins.html#object">builtins.object</a>
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="vllm_mlx.engine.batched.html#MLLMModelWrapper">MLLMModelWrapper</a>
+</dt></dl>
+</dd>
+<dt class="heading-text"><a href="vllm_mlx.engine.base.html#BaseEngine">vllm_mlx.engine.base.BaseEngine</a>(<a href="abc.html#ABC">abc.ABC</a>)
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="vllm_mlx.engine.batched.html#BatchedEngine">BatchedEngine</a>
+</dt></dl>
+</dd>
+</dl>
+ <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="BatchedEngine">class <strong>BatchedEngine</strong></a>(<a href="vllm_mlx.engine.base.html#BaseEngine">vllm_mlx.engine.base.BaseEngine</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#BatchedEngine">BatchedEngine</a>(model_name:&nbsp;str,&nbsp;trust_remote_code:&nbsp;bool&nbsp;=&nbsp;True,&nbsp;scheduler_config:&nbsp;typing.Any&nbsp;|&nbsp;None&nbsp;=&nbsp;None,&nbsp;stream_interval:&nbsp;int&nbsp;=&nbsp;1,&nbsp;force_mllm:&nbsp;bool&nbsp;=&nbsp;False)<br>
+&nbsp;<br>
+Batched&nbsp;engine&nbsp;for&nbsp;continuous&nbsp;batching.<br>
+&nbsp;<br>
+This&nbsp;engine&nbsp;provides&nbsp;better&nbsp;throughput&nbsp;when&nbsp;serving&nbsp;multiple<br>
+concurrent&nbsp;users&nbsp;by&nbsp;batching&nbsp;requests&nbsp;together.<br>
+&nbsp;<br>
+For&nbsp;MLLM&nbsp;(multimodal)&nbsp;models,&nbsp;this&nbsp;engine&nbsp;uses&nbsp;MLLMScheduler<br>
+which&nbsp;handles&nbsp;images&nbsp;and&nbsp;videos&nbsp;alongside&nbsp;text&nbsp;generation.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="vllm_mlx.engine.batched.html#BatchedEngine">BatchedEngine</a></dd>
+<dd><a href="vllm_mlx.engine.base.html#BaseEngine">vllm_mlx.engine.base.BaseEngine</a></dd>
+<dd><a href="abc.html#ABC">abc.ABC</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="BatchedEngine-__init__"><strong>__init__</strong></a>(self, model_name: str, trust_remote_code: bool = True, scheduler_config: typing.Any | None = None, stream_interval: int = 1, force_mllm: bool = False)</dt><dd><span class="code">Initialize&nbsp;the&nbsp;batched&nbsp;engine.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;model_name:&nbsp;HuggingFace&nbsp;model&nbsp;name&nbsp;or&nbsp;local&nbsp;path<br>
+&nbsp;&nbsp;&nbsp;&nbsp;trust_remote_code:&nbsp;Whether&nbsp;to&nbsp;trust&nbsp;remote&nbsp;code<br>
+&nbsp;&nbsp;&nbsp;&nbsp;scheduler_config:&nbsp;Optional&nbsp;scheduler&nbsp;configuration<br>
+&nbsp;&nbsp;&nbsp;&nbsp;stream_interval:&nbsp;Tokens&nbsp;to&nbsp;batch&nbsp;before&nbsp;streaming&nbsp;(1=every&nbsp;token)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;force_mllm:&nbsp;Force&nbsp;loading&nbsp;as&nbsp;MLLM&nbsp;even&nbsp;if&nbsp;not&nbsp;auto-detected</span></dd></dl>
+
+<dl><dt>async <a name="BatchedEngine-chat"><strong>chat</strong></a>(self, messages: list[dict[str, typing.Any]], max_tokens: int = 256, temperature: float = 0.7, top_p: float = 0.9, tools: list[dict] | None = None, images: list[str] | None = None, videos: list[str] | None = None, **kwargs) -&gt; vllm_mlx.engine.base.GenerationOutput</dt><dd><span class="code">Chat&nbsp;completion&nbsp;(non-streaming).<br>
+&nbsp;<br>
+For&nbsp;MLLM&nbsp;models,&nbsp;all&nbsp;requests&nbsp;(including&nbsp;text-only)&nbsp;are&nbsp;routed&nbsp;through<br>
+the&nbsp;MLLMScheduler&nbsp;for&nbsp;vision-aware&nbsp;batched&nbsp;generation.<br>
+For&nbsp;non-MLLM&nbsp;models,&nbsp;uses&nbsp;the&nbsp;LLM&nbsp;engine&nbsp;with&nbsp;BatchGenerator.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;messages:&nbsp;List&nbsp;of&nbsp;chat&nbsp;messages&nbsp;(OpenAI&nbsp;format)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;max_tokens:&nbsp;Maximum&nbsp;tokens&nbsp;to&nbsp;generate<br>
+&nbsp;&nbsp;&nbsp;&nbsp;temperature:&nbsp;Sampling&nbsp;temperature<br>
+&nbsp;&nbsp;&nbsp;&nbsp;top_p:&nbsp;Top-p&nbsp;sampling<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tools:&nbsp;Optional&nbsp;tool&nbsp;definitions<br>
+&nbsp;&nbsp;&nbsp;&nbsp;images:&nbsp;Optional&nbsp;image&nbsp;URLs/paths<br>
+&nbsp;&nbsp;&nbsp;&nbsp;videos:&nbsp;Optional&nbsp;video&nbsp;URLs/paths<br>
+&nbsp;&nbsp;&nbsp;&nbsp;**kwargs:&nbsp;Additional&nbsp;model-specific&nbsp;parameters<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;GenerationOutput&nbsp;with&nbsp;assistant&nbsp;response</span></dd></dl>
+
+<dl><dt>async <a name="BatchedEngine-generate"><strong>generate</strong></a>(self, prompt: str, max_tokens: int = 256, temperature: float = 0.7, top_p: float = 0.9, stop: list[str] | None = None, images: list[str] | None = None, videos: list[str] | None = None, **kwargs) -&gt; vllm_mlx.engine.base.GenerationOutput</dt><dd><span class="code">Generate&nbsp;a&nbsp;complete&nbsp;response&nbsp;(non-streaming).<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;prompt:&nbsp;Input&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;max_tokens:&nbsp;Maximum&nbsp;tokens&nbsp;to&nbsp;generate<br>
+&nbsp;&nbsp;&nbsp;&nbsp;temperature:&nbsp;Sampling&nbsp;temperature<br>
+&nbsp;&nbsp;&nbsp;&nbsp;top_p:&nbsp;Top-p&nbsp;sampling<br>
+&nbsp;&nbsp;&nbsp;&nbsp;stop:&nbsp;Stop&nbsp;sequences<br>
+&nbsp;&nbsp;&nbsp;&nbsp;images:&nbsp;Optional&nbsp;image&nbsp;URLs/paths&nbsp;(for&nbsp;MLLM)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;videos:&nbsp;Optional&nbsp;video&nbsp;URLs/paths&nbsp;(for&nbsp;MLLM)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;**kwargs:&nbsp;Additional&nbsp;model-specific&nbsp;parameters<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;GenerationOutput&nbsp;with&nbsp;complete&nbsp;text</span></dd></dl>
+
+<dl><dt><a name="BatchedEngine-get_cache_stats"><strong>get_cache_stats</strong></a>(self) -&gt; dict[str, typing.Any] | None</dt><dd><span class="code">Get&nbsp;cache&nbsp;statistics.</span></dd></dl>
+
+<dl><dt><a name="BatchedEngine-get_stats"><strong>get_stats</strong></a>(self) -&gt; dict[str, typing.Any]</dt><dd><span class="code">Get&nbsp;engine&nbsp;statistics.</span></dd></dl>
+
+<dl><dt><a name="BatchedEngine-load_cache_from_disk"><strong>load_cache_from_disk</strong></a>(self, cache_dir: str) -&gt; int</dt><dd><span class="code">Load&nbsp;prefix&nbsp;cache&nbsp;from&nbsp;disk.&nbsp;Returns&nbsp;number&nbsp;of&nbsp;entries&nbsp;loaded.</span></dd></dl>
+
+<dl><dt><a name="BatchedEngine-save_cache_to_disk"><strong>save_cache_to_disk</strong></a>(self, cache_dir: str) -&gt; bool</dt><dd><span class="code">Save&nbsp;prefix&nbsp;cache&nbsp;to&nbsp;disk&nbsp;for&nbsp;persistence&nbsp;across&nbsp;restarts.</span></dd></dl>
+
+<dl><dt>async <a name="BatchedEngine-start"><strong>start</strong></a>(self) -&gt; None</dt><dd><span class="code">Start&nbsp;the&nbsp;engine&nbsp;(load&nbsp;model&nbsp;if&nbsp;not&nbsp;loaded).</span></dd></dl>
+
+<dl><dt>async <a name="BatchedEngine-stop"><strong>stop</strong></a>(self) -&gt; None</dt><dd><span class="code">Stop&nbsp;the&nbsp;engine&nbsp;and&nbsp;cleanup&nbsp;resources.</span></dd></dl>
+
+<dl><dt>async <a name="BatchedEngine-stream_chat"><strong>stream_chat</strong></a>(self, messages: list[dict[str, typing.Any]], max_tokens: int = 256, temperature: float = 0.7, top_p: float = 0.9, tools: list[dict] | None = None, images: list[str] | None = None, videos: list[str] | None = None, **kwargs) -&gt; collections.abc.AsyncIterator[vllm_mlx.engine.base.GenerationOutput]</dt><dd><span class="code">Stream&nbsp;chat&nbsp;completion&nbsp;token&nbsp;by&nbsp;token.<br>
+&nbsp;<br>
+For&nbsp;MLLM&nbsp;models,&nbsp;all&nbsp;requests&nbsp;(including&nbsp;text-only)&nbsp;are&nbsp;streamed&nbsp;through<br>
+the&nbsp;MLLMScheduler&nbsp;for&nbsp;vision-aware&nbsp;batched&nbsp;generation.<br>
+For&nbsp;non-MLLM&nbsp;models,&nbsp;uses&nbsp;the&nbsp;LLM&nbsp;engine&nbsp;with&nbsp;BatchGenerator.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;messages:&nbsp;List&nbsp;of&nbsp;chat&nbsp;messages&nbsp;(OpenAI&nbsp;format)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;max_tokens:&nbsp;Maximum&nbsp;tokens&nbsp;to&nbsp;generate<br>
+&nbsp;&nbsp;&nbsp;&nbsp;temperature:&nbsp;Sampling&nbsp;temperature<br>
+&nbsp;&nbsp;&nbsp;&nbsp;top_p:&nbsp;Top-p&nbsp;sampling<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tools:&nbsp;Optional&nbsp;tool&nbsp;definitions<br>
+&nbsp;&nbsp;&nbsp;&nbsp;images:&nbsp;Optional&nbsp;image&nbsp;URLs/paths<br>
+&nbsp;&nbsp;&nbsp;&nbsp;videos:&nbsp;Optional&nbsp;video&nbsp;URLs/paths<br>
+&nbsp;&nbsp;&nbsp;&nbsp;**kwargs:&nbsp;Additional&nbsp;model-specific&nbsp;parameters<br>
+&nbsp;<br>
+Yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;GenerationOutput&nbsp;with&nbsp;incremental&nbsp;text</span></dd></dl>
+
+<dl><dt>async <a name="BatchedEngine-stream_generate"><strong>stream_generate</strong></a>(self, prompt: str, max_tokens: int = 256, temperature: float = 0.7, top_p: float = 0.9, stop: list[str] | None = None, images: list[str] | None = None, videos: list[str] | None = None, **kwargs) -&gt; collections.abc.AsyncIterator[vllm_mlx.engine.base.GenerationOutput]</dt><dd><span class="code">Stream&nbsp;generation&nbsp;token&nbsp;by&nbsp;token.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;prompt:&nbsp;Input&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;max_tokens:&nbsp;Maximum&nbsp;tokens&nbsp;to&nbsp;generate<br>
+&nbsp;&nbsp;&nbsp;&nbsp;temperature:&nbsp;Sampling&nbsp;temperature<br>
+&nbsp;&nbsp;&nbsp;&nbsp;top_p:&nbsp;Top-p&nbsp;sampling<br>
+&nbsp;&nbsp;&nbsp;&nbsp;stop:&nbsp;Stop&nbsp;sequences<br>
+&nbsp;&nbsp;&nbsp;&nbsp;images:&nbsp;Optional&nbsp;image&nbsp;URLs/paths&nbsp;(for&nbsp;MLLM)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;videos:&nbsp;Optional&nbsp;video&nbsp;URLs/paths&nbsp;(for&nbsp;MLLM)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;**kwargs:&nbsp;Additional&nbsp;model-specific&nbsp;parameters<br>
+&nbsp;<br>
+Yields:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;GenerationOutput&nbsp;with&nbsp;incremental&nbsp;text</span></dd></dl>
+
+<hr>
+Readonly properties defined here:<br>
+<dl><dt><strong>is_mllm</strong></dt>
+<dd><span class="code">Check&nbsp;if&nbsp;this&nbsp;is&nbsp;a&nbsp;multimodal&nbsp;model.</span></dd>
+</dl>
+<dl><dt><strong>model_name</strong></dt>
+<dd><span class="code">Get&nbsp;the&nbsp;model&nbsp;name.</span></dd>
+</dl>
+<dl><dt><strong>tokenizer</strong></dt>
+<dd><span class="code">Get&nbsp;the&nbsp;tokenizer.</span></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__abstractmethods__</strong> = frozenset()</dl>
+
+<hr>
+Data descriptors inherited from <a href="vllm_mlx.engine.base.html#BaseEngine">vllm_mlx.engine.base.BaseEngine</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+<dl><dt><strong>preserve_native_tool_format</strong></dt>
+<dd><span class="code">Whether&nbsp;to&nbsp;preserve&nbsp;native&nbsp;tool&nbsp;message&nbsp;format.<br>
+&nbsp;<br>
+When&nbsp;True,&nbsp;role="tool"&nbsp;messages&nbsp;and&nbsp;tool_calls&nbsp;fields&nbsp;are&nbsp;preserved<br>
+instead&nbsp;of&nbsp;being&nbsp;converted&nbsp;to&nbsp;text.&nbsp;Set&nbsp;by&nbsp;server&nbsp;based&nbsp;on&nbsp;tool&nbsp;parser.</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="MLLMModelWrapper">class <strong>MLLMModelWrapper</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#MLLMModelWrapper">MLLMModelWrapper</a>(model)<br>
+&nbsp;<br>
+Wrapper&nbsp;for&nbsp;MLLM&nbsp;models&nbsp;to&nbsp;make&nbsp;them&nbsp;compatible&nbsp;with&nbsp;BatchGenerator.<br>
+&nbsp;<br>
+BatchGenerator&nbsp;expects&nbsp;model&nbsp;output&nbsp;to&nbsp;be&nbsp;subscriptable&nbsp;(logits&nbsp;array),<br>
+but&nbsp;MLLM&nbsp;models&nbsp;return&nbsp;LanguageModelOutput&nbsp;objects.&nbsp;This&nbsp;wrapper&nbsp;extracts<br>
+the&nbsp;logits&nbsp;from&nbsp;the&nbsp;output.<br>
+&nbsp;<br>
+Also&nbsp;handles&nbsp;Gemma&nbsp;3's&nbsp;required&nbsp;pixel_values&nbsp;argument&nbsp;by&nbsp;injecting&nbsp;None<br>
+for&nbsp;text-only&nbsp;requests.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn">Methods defined here:<br>
+<dl><dt><a name="MLLMModelWrapper-__call__"><strong>__call__</strong></a>(self, *args, **kwargs)</dt><dd><span class="code">Call&nbsp;the&nbsp;model&nbsp;and&nbsp;extract&nbsp;logits&nbsp;from&nbsp;LanguageModelOutput.</span></dd></dl>
+
+<dl><dt><a name="MLLMModelWrapper-__getattr__"><strong>__getattr__</strong></a>(self, name)</dt><dd><span class="code">Forward&nbsp;all&nbsp;other&nbsp;attributes&nbsp;to&nbsp;the&nbsp;wrapped&nbsp;model.</span></dd></dl>
+
+<dl><dt><a name="MLLMModelWrapper-__init__"><strong>__init__</strong></a>(self, model)</dt><dd><span class="code">Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</span></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor data-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
+    
+<tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><strong>logger</strong> = &lt;Logger vllm_mlx.engine.batched (WARNING)&gt;</td></tr></table>
+</body></html>
